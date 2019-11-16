@@ -1,0 +1,71 @@
+﻿@page "/"
+@using ReHome.WebServer.Services;
+@inject SyncService sync
+
+@code 
+{
+    bool isSelected = false;
+    DateTime? selectedTime = null;
+    DateTime[] times = new[]
+    {
+        DateTime.Parse("17:4"),
+        DateTime.Parse("17:17"),
+        DateTime.Parse("17:33"),
+        DateTime.Parse("17:44"),
+        DateTime.Parse("17:53"),
+        DateTime.Parse("18:4"),
+        DateTime.Parse("18:13"),
+        DateTime.Parse("18:23"),
+        DateTime.Parse("18:35"),
+        DateTime.Parse("18:43"),
+        DateTime.Parse("18:56"),
+        DateTime.Parse("19:4"),
+        DateTime.Parse("19:14"),
+        DateTime.Parse("19:26"),
+        DateTime.Parse("19:35"),
+        DateTime.Parse("19:50"),
+        DateTime.Parse("20:0"),
+        DateTime.Parse("20:13"),
+        DateTime.Parse("20:34"),
+        DateTime.Parse("20:51"),
+        DateTime.Parse("21:4"),
+        DateTime.Parse("21:15"),
+        DateTime.Parse("21:30"),
+        DateTime.Parse("21:47"),
+        DateTime.Parse("22:9"),
+        DateTime.Parse("22:34"),
+        DateTime.Parse("22:58"),
+        DateTime.Parse("23:19"),
+        DateTime.Parse("23:45"),
+        DateTime.Parse("0:17")
+    };
+}
+
+@functions 
+{
+    void onclick(DateTime time)
+    {
+        sync.Event(time);
+        selectedTime = time;
+        isSelected = true;
+    }
+}
+
+<h1>今から帰るよ</h1>
+
+@if (isSelected)
+{
+    if (selectedTime.HasValue)
+    {
+        @selectedTime.Value.ToShortTimeString();
+    }
+}
+else
+{
+<ul>
+    @foreach (var time in times)
+    {
+        <li @onclick="(() => onclick(time))">@time.ToShortTimeString()</li>
+    }
+</ul>
+}

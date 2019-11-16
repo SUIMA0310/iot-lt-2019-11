@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+option csharp_namespace = "ReHome.gRPC";
+
+package ReHome;
+
+// service definition.
+service ReturnHomeService {
+
+	// ¡‚©‚ç‹A‘î‚·‚é‚±‚Æ‚ğ’Ê’m‚·‚é
+    rpc WaitForCall  (CallRequest)  returns (stream CallResponse);
+
+	// ‹A‘î‚·‚é‚±‚Æ‚ª“`‚í‚Á‚½‚±‚Æ‚ğ’Ê’m‚·‚é
+    //rpc Reqly (stream ReqlyRequest) returns (ReqlyResponse);
+
+}
+
+message CallRequest {
+
+	// ~Ô‰w
+	string DisembarkingPoint = 1;
+
+
+}
+
+message CallResponse {
+
+	// æÔ‰w
+	string EntrainingPoint   = 1;
+
+	// æÔ
+	string EntrainingTime    = 2; // C# ‚Ì DateTime Œ^‚ğ ToString ‚µ‚½•¶š—ñ‚ğ“ü‚ê‚é
+
+	// ~Ô
+	string DisembarkingTime  = 3;
+	
+}
+
+
+//message ReqlyRequest {
+//
+//}
+//message ReqlyResponse {
+//
+//}
