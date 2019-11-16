@@ -37,8 +37,8 @@ namespace ReHome.Home
 
             AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
 
-            //using var channel = GrpcChannel.ForAddress("http://iot.penguins-lab.net:81");
-            using var channel = GrpcChannel.ForAddress("http://localhost:81");
+            using var channel = GrpcChannel.ForAddress("http://iot.penguins-lab.net:81");
+            //using var channel = GrpcChannel.ForAddress("http://localhost:81");
 
 
             var client = new ReturnHomeService.ReturnHomeServiceClient(channel);
