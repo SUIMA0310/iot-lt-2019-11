@@ -35,7 +35,11 @@ namespace ReHome.Home
 
             DateTime? receiveTime = null;
 
-            using var channel = GrpcChannel.ForAddress("https://localhost:5001");
+            AppContext.SetSwitch("System.Net.Http.SocketsHttpHandler.Http2UnencryptedSupport", true);
+
+            //using var channel = GrpcChannel.ForAddress("http://iot.penguins-lab.net:80");
+            using var channel = GrpcChannel.ForAddress("http://localhost:5000");
+
 
             var client = new ReturnHomeService.ReturnHomeServiceClient(channel);
             using var streamResult = client.WaitForCall(new CallRequest() { DisembarkingPoint = "西高屋" });
@@ -99,15 +103,15 @@ namespace ReHome.Home
             {
                 await receiveTask;
                 await pinControlTask;
+                (gpioCtrl_G as IDisposable)?.Dispose();
+                (gpioCtrl_Y as IDisposable)?.Dispose();
+                (gpioCtrl_R as IDisposable)?.Dispose();
+                
             }
             catch (Grpc.Core.RpcException)
             {
 
             }
-
-            (gpioCtrl_G as IDisposable)?.Dispose();
-            (gpioCtrl_Y as IDisposable)?.Dispose();
-            (gpioCtrl_R as IDisposable)?.Dispose();
         }
     }
 }
