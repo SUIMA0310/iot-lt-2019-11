@@ -25,10 +25,10 @@ namespace ReHome.WebServer
                 {
                     webBuilder.ConfigureKestrel(options =>
                     {
-                        options.ListenAnyIP(80);
-                        // Setup a HTTP/2 endpoint without TLS.
-                        options.ListenLocalhost(80, o => o.Protocols =
-                            HttpProtocols.Http2);
+                        options.ListenAnyIP(80,o => o.Protocols =
+                            HttpProtocols.Http1);
+                        options.ListenAnyIP(81, o => o.Protocols =
+                             HttpProtocols.Http2);
                     });
                     webBuilder.UseStartup<Startup>();
                 });
